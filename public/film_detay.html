@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Film Detay Sayfası</title>
+    <link rel="stylesheet" href="film_detay.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+</head>
+<body>
+    <!-- ! navbar başlangıcı -->
+    <div class="navbar">
+        <div class="navbar-wrapper">
+            <div class="logo-wrapper">
+                <a href="index.html" style="text-decoration: none;">
+                    <h1 class="logo">ALEYFLIX</h1>
+                </a>
+            </div>
+            <div class="menu-container">
+                <ul class="menu-list">
+                    <li class="menu-list-item active"><a href="index.html">Ana Sayfa</a></li>
+                    <li class="menu-list-item"><a href="filmler.html">Filmler</a></li>
+                    <li class="menu-list-item"><a href="onerilenler.html">Önerilenler</a></li>
+                </ul>
+            </div>
+            <div class="profile-container">
+                <div class="profile-text-container">
+                    <span class="profile-text">Hesabım</span>
+                    <i class="bi bi-caret-down-fill"></i>
+                </div>
+                <!-- Hesabım Dropdown Menüsü -->
+                <div class="dropdown-content">
+                    <a href="ayarlar.html" id="settings-link">Ayarlar</a>
+                    <a href="#" id="cikis-butonu">Çıkış</a>
+                </div>
+            </div>
+        </div>
+    </div> <!-- ! navbar bitişi -->
+
+    <!-- ! sidebar başlangıcı -->
+    <div class="sidebar">
+        
+
+        <a href="kaydedilenler.html">
+            <i class="bi bi-bookmarks-fill"></i>
+        </a>
+        <a href="ayarlar.html">
+            <i class="bi bi-gear-fill"></i> <!-- Ayarlar ikonu -->
+        </a>
+    </div> <!-- ! sidebar bitişi -->
+
+    <!-- Sayfa İçeriği -->
+    <div class="container">
+        
+        
+
+        <!-- Film Bilgileri -->
+        <!-- Film Detay Container -->
+<div class="film-detay-container">
+    <!-- Afiş (Sol Taraf) -->
+    <div class="film-afis-container" data-film-adi="">
+        <img id="filmAfisi" src="" alt="Film Afişi" class="film-afis">
+    </div>
+
+    <!-- Film Bilgileri (Sağ Taraf) -->
+    <div class="film-bilgileri">
+        <h1 id="filmAdi">Film Adı</h1>
+
+        
+        <div class="bilgi-grid">
+
+            <p><strong>Yıl:</strong> <span id="filmYil"></span></p>
+            <p><strong>Tür:</strong> <span id="filmTur"></span></p>
+            <p><strong>Konu:</strong> <span id="filmKonu"></span></p>
+            <p><strong>Oyuncular:</strong> <span id="filmOyuncular"></span></p>
+            <p><strong>IMDb Puanı:</strong> <span id="filmImdb"></span></p>
+            <p><strong>Süre:</strong> <span id="filmSure"></span></p>
+            <p><strong>Dil:</strong> <span id="filmDil"></span></p>
+            <p><strong>Ülke:</strong> <span id="filmUlke"></span></p>
+            <p><strong>Yönetmen:</strong> <span id="filmYonetmen"></span></p>
+
+            <p><strong>Yapım Şirketi:</strong> <span id="filmYapimSirketi"></span></p>
+
+        </div>
+<button id="kaydetButonu" class="btn btn-primary">İzlenecek filmler listesine kaydet</button>
+<button id="izledimButonu" class="btn btn-success">İzledim</button>
+
+
+    </div>
+</div>
+        
+
+        <!-- Değerlendirme Bölümü -->
+        <div class="film-degerlendirme">
+            <div class="degerlendirme-sol">
+                <div class="degerlendirme-bolum">
+                    <label for="senaryo">Senaryo</label>
+                    <div class="yildizlar" id="senaryo-stars">
+                        <span class="yildiz" data-value="1">&#9733;</span>
+                        <span class="yildiz" data-value="2">&#9733;</span>
+                        <span class="yildiz" data-value="3">&#9733;</span>
+                        <span class="yildiz" data-value="4">&#9733;</span>
+                        <span class="yildiz" data-value="5">&#9733;</span>
+                    </div>
+                </div>
+                <div class="degerlendirme-bolum">
+                    <label for="oyunculuk">Oyunculuk</label>
+                    <div class="yildizlar" id="oyunculuk-stars">
+                        <span class="yildiz" data-value="1">&#9733;</span>
+                        <span class="yildiz" data-value="2">&#9733;</span>
+                        <span class="yildiz" data-value="3">&#9733;</span>
+                        <span class="yildiz" data-value="4">&#9733;</span>
+                        <span class="yildiz" data-value="5">&#9733;</span>
+                    </div>
+                </div>
+                <div class="degerlendirme-bolum">
+                    <label for="yönetmen">Yönetmen</label>
+                    <div class="yildizlar" id="yönetmen-stars">
+                        <span class="yildiz" data-value="1">&#9733;</span>
+                        <span class="yildiz" data-value="2">&#9733;</span>
+                        <span class="yildiz" data-value="3">&#9733;</span>
+                        <span class="yildiz" data-value="4">&#9733;</span>
+                        <span class="yildiz" data-value="5">&#9733;</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Yorum Alanı ve Değerlendirme Butonu -->
+            <div class="degerlendirme-sag">
+                <div class="yorum-alani">
+                    <label for="yorum">Değerlendirmenizi Yazın:</label>
+                    <textarea id="yorum" placeholder="Yorumunuzu buraya yazın..." rows="4"></textarea>
+                </div>
+                <button id="degerlendir" class="degerlendir-btn">Değerlendir</button>
+            </div>
+
+            <div id="errorMessage" style="display: none; color: red; margin: 10px 0;"></div>
+
+
+        </div>
+    </div>
+    
+    <!-- Benzer Filmler Bölümü -->
+    <div class="benzer-filmler-container">
+        <h2>Benzer Filmler</h2>
+        <div class="benzer-filmler-grid" id="benzerFilmlerGrid">
+            <!-- Benzer filmler JavaScript ile buraya eklenecek -->
+        </div>
+    </div>
+
+    <script>
+        // URL'den film ID'sini al (örnek: film_detay.html?id=5)
+        const urlParams = new URLSearchParams(window.location.search);
+        const filmId = urlParams.get('id');
+
+         // Çıkış işlevi
+         async function cikisYap() {
+            try {
+                const response = await fetch('http://localhost:3000/cikis', {
+                    method: 'POST',
+                    credentials: 'include'
+                });
+
+                if (response.ok) {
+                    // Çıkış başarılı, kullanıcıyı giriş sayfasına yönlendir
+                    window.location.href = 'giris_kayit.html';
+                } else {
+                    console.error('Çıkış yapılırken bir hata oluştu');
+                }
+            } catch (error) {
+                console.error('Çıkış yapılırken bir hata oluştu:', error);
+            }
+        }
+
+        // Çıkış butonuna tıklama olayını dinle
+        document.addEventListener('DOMContentLoaded', function() {
+            const cikisButonu = document.getElementById('cikis-butonu');
+            if (cikisButonu) {
+                cikisButonu.addEventListener('click', cikisYap);
+            }
+        });
+    
+        // Eğer ID yoksa uyarı göster ve işlemi durdur
+        if (!filmId) {
+            alert("Film ID bulunamadı!");
+            throw new Error("Film ID eksik.");
+        }
+    
+        // Belirli film ID'sine göre verileri çekmek için sunucuya istek gönder
+        fetch(`http://localhost:3003/film-detay/${filmId}`)
+    .then(response => {
+        if (!response.ok) throw new Error('Film bulunamadı');
+        return response.json();
+    })
+    .then(film => {
+        // Film bilgilerini güvenli şekilde al
+        const filmData = {
+            afis_url: film.afis_url || film.afis || '',
+            film_adi: film.film_adi || film.ad || film.title || 'Bilinmeyen Film',
+            yil: film.yil || 'Bilinmiyor',
+            tur: film.tur || film.genre || 'Bilinmiyor',
+            yonetmen: film.yonetmen || film.director || 'Bilinmiyor',
+            oyuncular: film.oyuncular || film.actors || 'Bilinmiyor',
+            imdb_puani: film.imdb_puani || film.imdb || 'Bilinmiyor',
+            sure_dk: film.sure || film.duration || 0,
+            dil: film.dil || film.language || 'Bilinmiyor',
+            ulke: film.ulke || film.country || 'Bilinmiyor',
+            konu: film.konu || film.plot || 'Açıklama yok',
+            yapim_sirketi: film.yapim_sirketi || film.production_company || 'Bilinmiyor'
+        };
+
+        // DOM'a yerleştirme
+        document.getElementById("filmAfisi").src = filmData.afis_url || 'placeholder.jpg';
+        document.getElementById("filmAdi").textContent = filmData.film_adi;
+        document.getElementById("filmYil").textContent = filmData.yil;
+        document.getElementById("filmTur").textContent = filmData.tur;
+        document.getElementById("filmKonu").textContent = filmData.konu;
+        document.getElementById("filmOyuncular").textContent = filmData.oyuncular;
+        document.getElementById("filmImdb").textContent = filmData.imdb_puani;
+        document.getElementById("filmSure").textContent = filmData.sure_dk + " dk";
+        document.getElementById("filmDil").textContent = filmData.dil;
+        document.getElementById("filmUlke").textContent = filmData.ulke;
+        document.getElementById("filmYonetmen").textContent = filmData.yonetmen;
+        document.getElementById("filmYapimSirketi").textContent = filmData.yapim_sirketi;
+
+    })
+    .catch(error => {
+        console.error("Hata:", error);
+        alert("Film bilgileri alınırken hata oluştu!");
+    });
+    
+        // Benzer filmleri getir
+        fetch(`http://localhost:3010/benzer-filmler/${filmId}`)
+            .then(response => {
+                if (!response.ok) throw new Error('Benzer filmler alınamadı');
+                return response.json();
+            })
+            .then(benzerFilmler => {
+                const benzerFilmlerGrid = document.getElementById('benzerFilmlerGrid');
+                benzerFilmlerGrid.innerHTML = ''; // Mevcut içeriği temizle
+
+                benzerFilmler.forEach(film => {
+                    const filmCard = document.createElement('div');
+                    filmCard.className = 'benzer-film-card';
+                    filmCard.onclick = () => window.location.href = `film_detay.html?id=${film.film_id}`;
+
+                    filmCard.innerHTML = `
+                        <img src="${film.afis_url}" alt="${film.film_adi}">
+                        <div class="benzer-film-info">
+                            <h3>${film.film_adi}</h3>
+                            <p>IMDb: ${film.imdb_puani}</p>
+                            <p>Yıl: ${film.yil}</p>
+                        </div>
+                    `;
+
+                    benzerFilmlerGrid.appendChild(filmCard);
+                });
+            })
+            .catch(error => {
+                console.error("Benzer filmler alınırken hata:", error);
+            });
+
+        // Yıldız tıklama olaylarını işleyelim
+        document.querySelectorAll(".yildizlar").forEach((yildizlarDiv) => {
+            const yildizlar = yildizlarDiv.querySelectorAll(".yildiz"); // Bu bölümdeki tüm yıldızları al
+
+            yildizlar.forEach((yildiz, index) => {
+                yildiz.addEventListener('click', () => {
+                    // Önce tüm yıldızların selected sınıfını kaldıralım
+                    yildizlar.forEach(y => y.classList.remove('selected'));
+
+                    // Sonra tıklanan yıldızın index'ine kadar olanları seçelim
+                    for (let i = 0; i <= index; i++) {
+                        yildizlar[i].classList.add('selected');
+                    }
+
+                    // Debug için seçilen yıldızları konsola yazdır
+                    console.log(`${yildizlarDiv.id} için seçilen yıldız:`, index + 1);
+                });
+            });
+        });
+
+        document.getElementById("degerlendir").addEventListener("click", () => {
+            // Önce kullanıcının giriş yapıp yapmadığını kontrol et
+            const token = localStorage.getItem('token');
+            const kullaniciId = localStorage.getItem('userId');
+
+            if (!token || !kullaniciId) {
+                localStorage.setItem('redirectAfterLogin', window.location.href);
+                alert('Değerlendirme yapabilmek için önce giriş yapmalısınız!');
+                window.location.href = 'giris_kayit.html';
+                return;
+            }
+
+            // Her bir alan için ayrı ayrı yıldız değerlerini al
+            const senaryoYildizlar = document.querySelectorAll('#senaryo-stars .yildiz');
+            const oyunculukYildizlar = document.querySelectorAll('#oyunculuk-stars .yildiz');
+            const yonetmenYildizlar = document.querySelectorAll('#yönetmen-stars .yildiz');
+
+            // Seçili yıldızları bul
+            const senaryoDeger = Array.from(senaryoYildizlar).filter(yildiz => yildiz.classList.contains('selected')).length;
+            const oyunculukDeger = Array.from(oyunculukYildizlar).filter(yildiz => yildiz.classList.contains('selected')).length;
+            const yonetmenDeger = Array.from(yonetmenYildizlar).filter(yildiz => yildiz.classList.contains('selected')).length;
+
+            const yorum = document.getElementById('yorum').value;
+
+            // Debug için değerleri konsola yazdır
+            console.log('Değerlendirme Değerleri:', {
+                senaryo: senaryoDeger,
+                oyunculuk: oyunculukDeger,
+                yonetmen: yonetmenDeger
+            });
+
+            // En az bir alanın değerlendirildiğini kontrol et
+            if (senaryoDeger === 0 && oyunculukDeger === 0 && yonetmenDeger === 0) {
+                alert('Lütfen tüm değerlendirme alanlarını doldurunuz !');
+                return;
+            }
+
+            // Değerlendirme verilerini sunucuya gönder
+            fetch('http://localhost:3004/film-degerlendir', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    filmId: filmId,
+                    senaryoDeger: senaryoDeger,
+                    oyunculukDeger: oyunculukDeger,
+                    yonetmenDeger: yonetmenDeger,
+                    yorum: yorum
+                })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    if (response.status === 401) {
+                        localStorage.removeItem('token');
+                        localStorage.removeItem('userId');
+                        localStorage.setItem('redirectAfterLogin', window.location.href);
+                        window.location.href = 'giris_kayit.html';
+                        return;
+                    }
+                    throw new Error('Değerlendirme kaydedilemedi');
+                }
+                return response.json();
+            })
+            .then(data => {
+                alert('Değerlendirmeniz başarıyla kaydedildi!');
+                // Formu temizle
+                document.querySelectorAll('.yildiz').forEach(yildiz => yildiz.classList.remove('selected'));
+                document.getElementById('yorum').value = '';
+            })
+            .catch(error => {
+                console.error('Hata:', error);
+                alert('Değerlendirme kaydedilirken bir hata oluştu!');
+            });
+        }); 
+
+        // Kaydet butonuna tıklama olayı
+        document.getElementById('kaydetButonu').addEventListener('click', async () => {
+            // Kullanıcının giriş yapıp yapmadığını kontrol et
+            const token = localStorage.getItem('token');
+            if (!token) {
+                alert('Film kaydetmek için giriş yapmalısınız!');
+                window.location.href = 'giris_kayit.html';
+                return;
+            }
+
+            try {
+                const response = await fetch('http://localhost:3000/film-kaydet', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ film_id: filmId })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    alert('Film başarıyla kaydedildi!');
+                    // Butonun görünümünü güncelle
+                    document.getElementById('kaydetButonu').textContent = 'Kaydedildi';
+                    document.getElementById('kaydetButonu').disabled = true;
+                } else {
+                    alert(data.mesaj || 'Film kaydedilirken bir hata oluştu.');
+                }
+            } catch (error) {
+                console.error('Film kaydetme hatası:', error);
+                alert('Film kaydedilirken bir hata oluştu.');
+            }
+        });
+
+        // Sayfa yüklendiğinde filmin kaydedilip kaydedilmediğini kontrol et
+        async function filmKayitDurumuKontrol() {
+            const token = localStorage.getItem('token');
+            if (!token) return;
+
+            try {
+                const response = await fetch('http://localhost:3000/kaydedilen-filmler', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                if (response.ok) {
+                    const kaydedilenFilmler = await response.json();
+                    const filmKayitli = kaydedilenFilmler.some(film => film.film_id === parseInt(filmId));
+                    
+                    if (filmKayitli) {
+                        document.getElementById('kaydetButonu').textContent = 'Kaydedildi';
+                        document.getElementById('kaydetButonu').disabled = true;
+                    }
+                }
+            } catch (error) {
+                console.error('Film kayıt durumu kontrolü hatası:', error);
+            }
+        }
+
+        // Sayfa yüklendiğinde film kayıt durumunu kontrol et
+        filmKayitDurumuKontrol();
+
+        // İzledim butonuna tıklama olayı
+        document.getElementById('izledimButonu').addEventListener('click', async () => {
+            // Kullanıcının giriş yapıp yapmadığını kontrol et
+            const token = localStorage.getItem('token');
+            if (!token) {
+                alert('Film izlendi olarak işaretlemek için giriş yapmalısınız!');
+                window.location.href = 'giris_kayit.html';
+                return;
+            }
+
+            try {
+                const response = await fetch('http://localhost:3000/film-izlendi', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ film_id: filmId })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    alert('Film başarıyla izlendi olarak işaretlendi!');
+                    // Butonun görünümünü güncelle
+                    document.getElementById('izledimButonu').textContent = 'İzlendi';
+                    document.getElementById('izledimButonu').disabled = true;
+                } else {
+                    alert(data.mesaj || 'Film işaretlenirken bir hata oluştu.');
+                }
+            } catch (error) {
+                console.error('Film işaretleme hatası:', error);
+                alert('Film işaretlenirken bir hata oluştu.');
+            }
+        });
+
+        // Sayfa yüklendiğinde filmin izlenip izlenmediğini kontrol et
+        async function filmIzlenmeDurumuKontrol() {
+            const token = localStorage.getItem('token');
+            if (!token) return;
+
+            try {
+                const response = await fetch('http://localhost:3000/izlenen-filmler', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                if (response.ok) {
+                    const izlenenFilmler = await response.json();
+                    const filmIzlenmis = izlenenFilmler.some(film => film.film_id === parseInt(filmId));
+                    
+                    if (filmIzlenmis) {
+                        document.getElementById('izledimButonu').textContent = 'İzlendi';
+                        document.getElementById('izledimButonu').disabled = true;
+                    }
+                }
+            } catch (error) {
+                console.error('Film izlenme durumu kontrolü hatası:', error);
+            }
+        }
+
+        // Sayfa yüklendiğinde film izlenme durumunu kontrol et
+        filmIzlenmeDurumuKontrol();
+
+    </script>
+    
+</body>
+</html>
