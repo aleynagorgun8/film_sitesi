@@ -1,0 +1,684 @@
+@import url('https://fonts.googleapis.com/css2?family=Electrolize&display=swap');
+/*!base css başlangıcı*/
+
+* {
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Electrolize", sans-serif;
+    background-color: #000;
+    color: white;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+}
+
+.container {
+    background-color: #000;
+    color: white;
+    min-height: 100vh;
+}
+
+/*!base css bitişi*/
+
+/*!navbar başlangıcı*/
+
+.navbar {
+    position: fixed;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.95);
+    height: 70px;
+    color: white;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(255, 70, 70, 0.2);
+    border-bottom: 1px solid rgba(255, 70, 70, 0.3);
+}
+
+.navbar-wrapper {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    padding: 0 50px;
+    justify-content: space-between;
+}
+
+.logo {
+    color: rgb(255, 70, 70);
+    font-size: 24px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-shadow: 0 0 10px rgba(255, 70, 70, 0.5);
+}
+
+.menu-list {
+    display: flex;
+    list-style: none;
+    column-gap: 30px;
+    padding: 0;
+    position: fixed;
+    left: 42%;
+    padding: 0;
+    margin-top: -15px;
+}
+
+.menu-list-item {
+    cursor: pointer;
+    position: relative;
+    padding: 5px 0;
+    transition: all 0.3s ease;
+}
+
+.menu-list-item a {
+    text-decoration: none;
+    color: inherit;
+    padding: 10px 15px;
+    display: block;
+    transition: color 0.3s ease;
+}
+
+.menu-list-item:hover a,
+.menu-list-item.active a {
+    color: rgb(255, 70, 70);
+}
+
+.menu-list-item::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: rgb(255, 70, 70);
+    transition: all 0.3s ease;
+}
+
+.menu-list-item:hover::after,
+.menu-list-item.active::after {
+    width: 70%;
+    left: 15%;
+}
+
+.profile-container {
+    display: flex;
+    align-items: center;
+    column-gap: 20px;
+    margin-left: auto;
+    position: relative;
+}
+
+.profile-text-container {
+    display: flex;
+    align-items: center;
+    column-gap: 5px;
+    line-height: 1;
+    cursor: pointer;
+    padding: 8px 12px;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+}
+
+.profile-text-container:hover {
+    background-color: rgba(255, 70, 70, 0.1);
+}
+
+.profile-text-container i {
+    font-size: 18px;
+    color: rgb(255, 70, 70);
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: #1a1a1a;
+    min-width: 180px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    z-index: 1;
+    border-radius: 5px;
+    font-size: 14px;
+    border: 1px solid rgba(255, 70, 70, 0.2);
+}
+
+.dropdown-content a {
+    color: #ddd;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.3s ease;
+}
+
+.dropdown-content a:hover {
+    background-color: rgba(255, 70, 70, 0.2);
+    color: white;
+    padding-left: 20px;
+}
+
+.profile-container:hover .dropdown-content {
+    display: block;
+}
+
+/*!navbar bitişi*/
+
+/*!sidebar başlangıcı*/
+.sidebar {
+    background-color: rgba(0, 0, 0, 0.9);
+    color: white;
+    height: 100vh;
+    width: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 80px;
+    row-gap: 40px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    border-right: 1px solid rgba(255, 70, 70, 0.2);
+    z-index: 900;
+}
+
+.sidebar i {
+    color: #ddd;
+    font-size: 22px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 8px;
+    border-radius: 50%;
+}
+
+.sidebar i:hover {
+    color: rgb(255, 70, 70);
+    background-color: rgba(255, 70, 70, 0.1);
+    transform: scale(1.1);
+}
+
+.search-container {
+    position: relative;
+    display: inline-block;
+}
+
+.search-input {
+    padding: 10px 15px;
+    width: 0;
+    border: 1px solid rgba(255, 70, 70, 0.3);
+    border-radius: 25px;
+    transition: all 0.3s ease-in-out;
+    visibility: hidden;
+    position: absolute;
+    left: 20px;
+    top: 0;
+    background-color: #1a1a1a;
+    color: white;
+}
+
+.search-icon {
+    cursor: pointer;
+    font-size: 24px;
+    transition: all 0.3s ease;
+}
+
+.search-container:hover .search-input {
+    width: 250px;
+    visibility: visible;
+    padding-left: 40px;
+}
+
+.search-container:hover .search-icon {
+    color: rgb(255, 70, 70);
+    transform: translateX(5px);
+}
+
+/*!sidebar bitişi*/
+
+/*! content bölümü başlangıcı */
+.content {
+    margin-left: 70px;
+    padding: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-top: 100px;
+}
+
+.content h1 {
+    color: #ffffff;
+    font-size: 2.5rem;
+    margin-bottom: 40px;
+    text-align: center;
+    position: relative;
+    padding-bottom: 15px;
+}
+
+.content h1::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 3px;
+    background: rgb(255, 70, 70);
+}
+
+.form-container {
+    background-color: #1a1a1a;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+    margin-bottom: 40px;
+}
+
+form {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 25px;
+    margin-left: 100px;
+}
+
+.form-section {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    font-size: 1rem;
+    margin-bottom: 10px;
+    color: #d0d0d0;
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+select {
+    width: 100%;
+    padding: 14px;
+    background-color: #252525;
+    border: 1px solid #333;
+    border-radius: 6px;
+    color: white;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+select:focus {
+    outline: none;
+    border-color: rgb(255, 70, 70);
+    box-shadow: 0 0 0 3px rgba(255, 70, 70, 0.2);
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.checkbox-group input[type="checkbox"] {
+    width: auto;
+    margin-right: 10px;
+    accent-color: rgb(255, 70, 70);
+}
+
+.checkbox-group label {
+    margin-bottom: 0;
+    font-weight: normal;
+}
+
+.submit-btn {
+    background: linear-gradient(to right, rgb(255, 70, 70), rgb(220, 60, 60));
+    color: white;
+    padding: 15px;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 20px;
+}
+
+.submit-btn:hover {
+    background: linear-gradient(to right, rgb(220, 60, 60), rgb(200, 50, 50));
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 70, 70, 0.3);
+}
+
+.submit-btn:active {
+    transform: translateY(0);
+}
+
+/* Mevcut Bilgiler Bölümü */
+.mevcut-bilgiler {
+    background-color: #1a1a1a;
+    color: white;
+    padding: 30px;
+    border-radius: 10px;
+    margin-top: 100px;
+    margin-left: 50px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+    border-left: 4px solid rgb(255, 70, 70);
+    margin-left: 400px;
+    margin-right: 400px;
+}
+
+.mevcut-bilgiler h2 {
+    font-size: 1.8rem;
+    margin-bottom: 25px;
+    color: white;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.mevcut-bilgiler h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background: rgb(255, 70, 70);
+}
+
+.mevcut-bilgiler ul {
+    list-style: none;
+}
+
+.mevcut-bilgiler li {
+    font-size: 1rem;
+    margin-bottom: 15px;
+    padding: 15px;
+    background-color: #252525;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.mevcut-bilgiler li strong {
+    color: rgb(255, 70, 70);
+    font-weight: normal;
+    margin-right: 10px;
+}
+
+.bilgi-guncelleme-formu{
+    margin-left: 300px;
+    margin-right: 400px;
+}
+
+/* Şifreyi gizle */
+.sifre-gizle {
+    cursor: pointer;
+    font-family: monospace;
+}
+
+/* Şifreyi göstermek için sınıf */
+.sifre-gizle.shown {
+    font-family: sans-serif;
+}
+
+
+
+/* Değerlendirmeler Bölümü Stilleri */
+.degerlendirmeler-alani {
+    background-color: #1a1a1a;
+    color: white;
+    padding: 30px;
+    border-radius: 10px;
+    margin-top: 30px;
+    margin-left: 300px;
+    margin-right: 300px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+    border-left: 4px solid rgb(255, 70, 70);
+}
+
+.degerlendirmeler-alani h2 {
+    font-size: 1.8rem;
+    margin-bottom: 25px;
+    color: white;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.degerlendirmeler-alani h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background: rgb(255, 70, 70);
+}
+
+.degerlendirme-karti {
+    background-color: #252525;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    gap: 20px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.degerlendirme-karti:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 70, 70, 0.2);
+    background-color: #2a2a2a;
+}
+
+.degerlendirme-karti::after {
+    content: 'Detayları Görüntüle';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(255, 70, 70, 0.9);
+    color: white;
+    padding: 8px;
+    text-align: center;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+}
+
+.degerlendirme-karti:hover::after {
+    transform: translateY(0);
+}
+
+.film-bilgisi {
+    flex: 0 0 200px;
+}
+
+.film-poster {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.film-bilgisi h3 {
+    font-size: 1.2rem;
+    color: white;
+    margin: 0;
+    text-align: center;
+}
+
+.degerlendirme-detaylari {
+    flex: 1;
+}
+
+.puanlar {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.puan {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.puan span {
+    min-width: 100px;
+    color: #ddd;
+}
+
+.yildizlar {
+    display: flex;
+    gap: 5px;
+}
+
+.yildiz {
+    color: #444;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+}
+
+.yildiz.dolu {
+    color: rgb(255, 70, 70);
+}
+
+.yorum {
+    background-color: #333;
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+.yorum p {
+    margin: 0;
+    color: #ddd;
+    line-height: 1.5;
+}
+
+.bos-mesaj, .hata-mesaj {
+    text-align: center;
+    color: #888;
+    padding: 20px;
+    font-size: 1.1rem;
+}
+
+.hata-mesaj {
+    color: rgb(255, 70, 70);
+}
+
+/* Responsive Tasarım */
+@media only screen and (max-width: 768px) {
+    .degerlendirme-karti {
+        flex-direction: column;
+    }
+
+    .film-bilgisi {
+        flex: 0 0 auto;
+    }
+
+    .film-poster {
+        height: 250px;
+    }
+
+    .puan {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+
+    .puan span {
+        min-width: auto;
+    }
+}
+
+/*! content bölümü bitişi */
+
+/*! responsive başlangıcı */
+@media only screen and (max-width: 1200px) {
+    .content {
+        padding: 30px 20px;
+    }
+    
+    .form-container, .mevcut-bilgiler {
+        padding: 30px;
+    }
+}
+
+@media only screen and (max-width: 992px) {
+    .navbar-wrapper {
+        padding: 0 30px;
+    }
+    
+    .menu-list {
+        gap: 25px;
+    }
+    
+    .content h1 {
+        font-size: 2rem;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .menu-list {
+        display: none;
+    }
+    
+    .sidebar {
+        width: 50px;
+    }
+    
+    .content {
+        margin-left: 50px;
+        padding-top: 90px;
+    }
+    
+    .content h1 {
+        font-size: 1.8rem;
+    }
+    
+    .form-container, .mevcut-bilgiler {
+        padding: 25px;
+    }
+    
+    .mevcut-bilgiler li {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+@media only screen and (max-width: 576px) {
+    .content {
+        padding: 20px 15px;
+        margin-left: 50px;
+    }
+    
+    .content h1 {
+        font-size: 1.5rem;
+    }
+    
+    .form-container, .mevcut-bilgiler {
+        padding: 20px;
+    }
+    
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    select {
+        padding: 12px;
+    }
+    
+    .submit-btn {
+        padding: 12px;
+    }
+}
+/*! responsive bitişi */

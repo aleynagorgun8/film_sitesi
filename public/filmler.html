@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aleyflix - Filmler</title>
+    <link rel="stylesheet" href="filmler.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+</head>
+<body>
+
+    <!-- Navbar Başlangıç -->
+    <div class="navbar">
+        <div class="navbar-wrapper">
+            <div class="logo-wrapper">
+                <a href="index.html" style="text-decoration: none;">
+                    <h1 class="logo">ALEYFLIX</h1>
+                </a>
+            </div>
+            <div class="menu-container">
+                <ul class="menu-list">
+                    <li class="menu-list-item"><a href="index.html">Ana Sayfa</a></li>
+                    <li class="menu-list-item active"><a href="filmler.html">Filmler</a></li>
+                    <li class="menu-list-item"><a href="onerilenler.html">Önerilenler</a></li>
+                </ul>
+            </div>
+            <div class="profile-container">
+                <div class="profile-text-container">
+                    <span class="profile-text">Hesabım</span>
+                    <i class="bi bi-caret-down-fill"></i>
+                </div>
+                <div class="dropdown-content">
+                    <a href="ayarlar.html">Ayarlar</a>
+                    <a href="#" id="cikis-butonu">Çıkış</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Navbar Bitiş -->
+
+    <!-- Sidebar Başlangıç -->
+    <div class="sidebar">
+        
+        <a href="kaydedilenler.html"><i class="bi bi-bookmarks-fill"></i></a>
+        <a href="ayarlar.html"><i class="bi bi-gear-fill"></i></a>
+    </div>
+    <!-- Sidebar Bitiş -->
+
+   <!-- Filtreleme Alanı Başlangıç -->
+<div class="filtreleme-alani">
+    <div class="filtre-kapsayici">
+        <div>
+            <label for="film-adi">Film Adı:</label>
+            <br>
+            <br>
+            <input type="text" id="film-adi" placeholder="Film adı girin">
+        </div>
+    </div>
+
+    <div class="filtre-kapsayici">
+        <div>
+            <label for="yonetmen">Yönetmen adı:</label>
+            <br>
+            <br>
+            <input type="text" id="yonetmen" placeholder="Yönetmen adı girin">
+        </div>
+    </div>
+
+    <div class="filtre-kapsayici">
+        <label>IMDb Puanı:</label>
+        <div style="display: flex; gap: 10px;">
+            <input type="number" id="imdb-min" placeholder="Min" step="0.1" min="0" max="10">
+            <input type="number" id="imdb-max" placeholder="Max" step="0.1" min="0" max="10">
+        </div>
+    </div>
+
+    <div class="filtre-kapsayici">
+        <label>Diller:</label>
+        <div id="dil-container" class="checkbox-group"></div>
+    </div>
+    
+
+    <div class="filtre-kapsayici">
+        <label>Film Türü:</label>
+        <div id="film-turu-container" class="checkbox-group"></div>
+    </div>
+
+    <div class="filtre-kapsayici">
+        <label>Oyuncular:</label>
+        <div id="oyuncu-container" class="checkbox-group"></div>
+    </div>
+
+    <div class="filtre-kapsayici">
+        <button id="filtrele-butonu" class="filtreleme-butonu">Filtrele</button>
+    </div>
+
+    <div class="filtre-kapsayici">
+        <button id="temizle-butonu" class="filtreleme-butonu">Filtreleri Temizle</button>
+    </div>
+    
+</div>
+
+<!-- Film Tablosu -->
+<div class="film-tablosu-alani">
+    <table id="filmTablosu" class="film-tablosu">
+        <thead>
+            <tr>
+                <th>Film Adı</th>
+                <th>Yıl</th>
+                <th>Tür</th>
+                <th>Yönetmen</th>
+                <th>Oyuncular</th>
+                <th>IMDb</th>
+                <th>Süre (dk)</th>
+                <th>Dil</th>
+                <th>Ülke</th>
+                <th>Konu</th>
+                <th>Yapım Şirketi</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
+
+
+<script>
+    // Sayfa yüklendiğinde filtreleme seçeneklerini getir
+    document.addEventListener('DOMContentLoaded', function() {
+        loadFilterOptions();
+        setupEventListeners();
+    });
+
+    // Filtreleme seçeneklerini yükle
+    function loadFilterOptions() {
+        fetch('http://localhost:3002/filtreleme-verileri')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                createCheckboxOptions('film-turu-container', data.genres || []);
+                createCheckboxOptions('oyuncu-container', data.actors || []);
+                createCheckboxOptions('dil-container', data.languages || []);
+            })
+            .catch(error => {
+                console.error('Filtreleme verileri yüklenemedi:', error);
+                alert('Filtreleme seçenekleri yüklenirken hata oluştu. Lütfen sayfayı yenileyin.');
+            });
+    }
+
+    // Checkbox seçeneklerini oluştur
+    function createCheckboxOptions(containerId, options) {
+        const container = document.getElementById(containerId);
+        if (!container) return;
+
+        container.innerHTML = ''; // Önceki içeriği temizle
+
+        options.forEach(option => {
+            if (!option) return; // Boş değerleri atla
+
+            const wrapper = document.createElement('div');
+            wrapper.className = 'checkbox-wrapper';
+            
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.id = `${containerId}-${option.replace(/\s+/g, '-')}`;
+            checkbox.value = option;
+            
+            const label = document.createElement('label');
+            label.htmlFor = checkbox.id;
+            label.textContent = option;
+            
+            wrapper.appendChild(checkbox);
+            wrapper.appendChild(label);
+            container.appendChild(wrapper);
+        });
+    }
+
+    // Event listener'ları kur
+    function setupEventListeners() {
+        // Filtrele butonu
+        document.getElementById("filtrele-butonu").addEventListener("click", applyFilters);
+        
+        // Temizle butonu
+        document.getElementById("temizle-butonu").addEventListener("click", resetFilters);
+        
+        // Film tablosu tıklamaları
+        document.getElementById("filmTablosu").addEventListener("click", handleTableClick);
+        
+        // Enter tuşu ile filtreleme
+        document.getElementById("film-adi").addEventListener("keypress", function(e) {
+            if (e.key === 'Enter') applyFilters();
+        });
+        document.getElementById("yonetmen").addEventListener("keypress", function(e) {
+            if (e.key === 'Enter') applyFilters();
+        });
+    }
+
+    // Filtreleme uygula
+    function applyFilters() {
+        const filters = {
+            movieName: document.getElementById("film-adi").value.trim(),
+            directorName: document.getElementById("yonetmen").value.trim(),
+            selectedGenres: getSelectedCheckboxValues("film-turu-container"),
+            selectedActors: getSelectedCheckboxValues("oyuncu-container"),
+            selectedLanguages: getSelectedCheckboxValues("dil-container"),
+            minIMDB: parseFloat(document.getElementById("imdb-min").value) || null,
+            maxIMDB: parseFloat(document.getElementById("imdb-max").value) || null
+        };
+
+        console.log("Uygulanan Filtreler:", filters);
+
+        fetch("http://localhost:3002/filtrele", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(filters)
+        })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(err => { throw err; });
+            }
+            return response.json();
+        })
+        .then(data => {
+            renderFilmTable(data.filmler || []);
+        })
+        .catch(error => {
+            console.error("Filtreleme hatası:", error);
+            alert(`Filtreleme sırasında hata oluştu: ${error.message || 'Bilinmeyen hata'}`);
+        });
+    }
+
+    // Seçili checkbox değerlerini al
+    function getSelectedCheckboxValues(containerId) {
+        return Array.from(document.querySelectorAll(`#${containerId} input[type="checkbox"]:checked`))
+                   .map(checkbox => checkbox.value)
+                   .filter(value => value); // Boş değerleri filtrele
+    }
+
+    // Film tablosunu render et
+    function renderFilmTable(films) {
+        const tableBody = document.getElementById("filmTablosu").querySelector("tbody");
+        tableBody.innerHTML = "";
+
+        if (films.length === 0) {
+            const row = document.createElement("tr");
+            row.innerHTML = `<td colspan="11" class="no-results">Uygun film bulunamadı.</td>`;
+            tableBody.appendChild(row);
+            return;
+        }
+
+        films.forEach(film => {
+            const row = document.createElement("tr");
+            row.setAttribute("data-film-id", film.film_id);
+            
+            // Null değerler için fallback
+            const safeValue = (value) => value || '-';
+            
+            row.innerHTML = `
+                <td>${safeValue(film.film_adi)}</td>
+                <td>${safeValue(film.yil)}</td>
+                <td>${safeValue(film.tur)}</td>
+                <td>${safeValue(film.yonetmen)}</td>
+                <td>${safeValue(film.oyuncular)}</td>
+                <td>${safeValue(film.imdb_puani)}</td>
+                <td>${safeValue(film.sure_dk)}</td>
+                <td>${safeValue(film.dil)}</td>
+                <td>${safeValue(film.ulke)}</td>
+                <td>${safeValue(film.konu)}</td>
+                <td>${safeValue(film.yapim_sirketi)}</td>
+            `;
+            tableBody.appendChild(row);
+        });
+    }
+
+    // Filtreleri temizle
+    function resetFilters() {
+        // Inputları temizle
+        document.getElementById("film-adi").value = "";
+        document.getElementById("yonetmen").value = "";
+        document.getElementById("imdb-min").value = "";
+        document.getElementById("imdb-max").value = "";
+
+        // Checkbox'ları temizle
+        document.querySelectorAll('.checkbox-wrapper input[type="checkbox"]').forEach(checkbox => {
+            checkbox.checked = false;
+        });
+
+        // Tabloyu temizle
+        document.getElementById("filmTablosu").querySelector("tbody").innerHTML = "";
+    }
+
+    // Tablo tıklama işleyici
+    function handleTableClick(event) {
+        const target = event.target;
+        
+        if (target.tagName === "TD") {
+            const row = target.closest("tr");
+            const filmId = row?.getAttribute("data-film-id");
+            
+            if (filmId) {
+                window.location.href = `film_detay.html?id=${filmId}`;
+            }
+        }
+    }
+
+    // Çıkış işlevi
+    async function cikisYap() {
+        try {
+            const response = await fetch('http://localhost:3000/cikis', {
+                method: 'POST',
+                credentials: 'include' // Session cookie'lerin gönderilmesi için
+            });
+
+            if (response.ok) {
+                // Çıkış başarılı, kullanıcıyı giriş sayfasına yönlendir
+                window.location.href = 'giris_kayit.html';
+            } else {
+                console.error('Çıkış yapılırken bir hata oluştu');
+            }
+        } catch (error) {
+            console.error('Çıkış yapılırken bir hata oluştu:', error);
+        }
+    }
+
+    // Çıkış butonuna tıklama olayını dinle
+    document.addEventListener('DOMContentLoaded', function() {
+        const cikisButonu = document.getElementById('cikis-butonu');
+        if (cikisButonu) {
+            cikisButonu.addEventListener('click', cikisYap);
+        }
+    });
+</script>
+    
+<style>
+    .checkbox-wrapper {
+        margin: 5px 0;
+        display: flex;
+        align-items: center;
+    }
+    
+    .checkbox-wrapper input {
+        margin-right: 8px;
+    }
+    
+    .no-results {
+        text-align: center;
+        padding: 20px;
+        color: #666;
+        font-style: italic;
+    }
+    
+    #filmTablosu tr {
+        cursor: pointer;
+        transition: background-color 0.2s;
+    }
+    
+    #filmTablosu tr:hover {
+        background-color: #f5f5f5;
+    }
+</style>
+
+</body>
+</html>
