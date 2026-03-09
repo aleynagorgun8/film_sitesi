@@ -176,7 +176,7 @@ app.post('/giris', async (istek, yanit) => {
         return yanit.status(500).json({ mesaj: 'Giriş sırasında bir hata oluştu.' });
     }
 });
-
+//değerlendirme endpointi
 app.post('/degerlendirme', authenticateToken, async (req, res) => {
     const { film_id, senaryo, oyunculuk, yonetmen, yorum } = req.body;
     const userId = req.userId;
@@ -239,7 +239,7 @@ app.post('/cikis', (req, res) => {
         res.clearCookie('connect.sid', {
             path: '/',
             httpOnly: true,
-            secure: false, // Development için false, production'da true olmalı
+            secure: false, 
             sameSite: 'lax'
         });
         
@@ -303,7 +303,7 @@ app.get('/filtreleme-verileri', async (req, res) => {
         // SQL bağlantısını oluştur
         const pool = await sql.connect(yapılandırma);
         
-        // Tüm sorguları paralel olarak çalıştır (performans için)
+        // Tüm sorguları paralel olarak çalıştırıyoruz
         const [dilResult, turResult, oyuncuResult] = await Promise.all([
             pool.request().query('SELECT DISTINCT dil_adi FROM Diller ORDER BY dil_adi'),
             pool.request().query('SELECT DISTINCT tur_ad FROM Turler ORDER BY tur_ad'),
@@ -772,13 +772,13 @@ app.post('/kullanici_kontrol', async (req, res) => {
         if (result.recordset.length > 0) {
             const kullanici = result.recordset[0];
 
-            // ✅ Eğer recoveryWord gönderildiyse, onu da kontrol et
+            // Eğer recoveryWord gönderildiyse, onu da kontrol et
             if (recoveryWord) {
                 const kelimeDB = kullanici.Kelime?.trim().toLowerCase();
                 const kelimeGelen = recoveryWord.trim().toLowerCase();
 
                 if (kelimeDB === kelimeGelen) {
-                    // ✅ Kelime doğru
+                    // Kelime doğru
                     res.json({ 
                         exists: true, 
                         user: kullanici, 
@@ -786,7 +786,7 @@ app.post('/kullanici_kontrol', async (req, res) => {
                         mesaj: "Kullanıcı bulundu ve kurtarma kelimesi doğru" 
                     });
                 } else {
-                    // ❌ Kelime yanlış
+                    // Kelime yanlış
                     res.json({ 
                         exists: true, 
                         user: kullanici, 
@@ -795,7 +795,7 @@ app.post('/kullanici_kontrol', async (req, res) => {
                     });
                 }
             } else {
-                // 🔄 Sadece kullanıcı kontrolü istenmiş (kelime gönderilmemiş)
+                // Sadece kullanıcı kontrolü istenmiş (kelime gönderilmemiş)
                 res.json({ exists: true, user: kullanici });
             }
 
@@ -1021,9 +1021,9 @@ app.get('/kaydedilen-filmler/:user_id', async (req, res) => {
 app.listen(3007, () => {
     console.log('kaydedilenler listesi: http://localhost:3007');
 });
-// Kullanıcıya ait kaydedilen filmleri listeleme endpointi (JWT veya session doğrulama eklenmiş)
+// Kullanıcıya ait kaydedilen filmleri listeleme endpointi 
 app.get('/kaydedilen-filmler', async (req, res) => {
-    const userId = req.user_id;  // JWT veya session ile alınan kullanıcı ID'si
+    const userId = req.user_id;  // session ile alınan kullanıcı ID'si
     if (!userId) {
         return res.status(401).send("Kullanıcı girişi yapılmamış.");
     }
@@ -1364,5 +1364,5 @@ app.get('/onerilen-filmler', authenticateToken, async (req, res) => {
 
 // Server'ı başlat
 app.listen(3012, () => {
-    console.log(`🎬 Kullanıcı öneri servisi 3012 portunda çalışıyor.`);
+    console.log(`Kullanıcı öneri servisi 3012 portunda çalışıyor.`);
 });
